@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.0.1</Version>
     <Authors>Patrick Kranz</Authors>
@@ -15,9 +15,9 @@
 
   <ItemGroup>
     <PackageReference Include="PdfCardGenerator" Version="0.0.2" />
-    <PackageReference Include="Wyam.Common" Version="1.5.0">
-    </PackageReference>
-
+    <PackageReference Include="Wyam.Common" Version="0.18.4" Condition="'$(TargetFramework)'=='net462'"/>
+    <PackageReference Include="Wyam.Common" Version="1.5.0" Condition="'$(TargetFramework)'=='netstandard2.0'"/>
+    
   </ItemGroup>
 
 </Project>
