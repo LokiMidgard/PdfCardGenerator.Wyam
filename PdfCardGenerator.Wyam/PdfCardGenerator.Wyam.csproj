@@ -6,6 +6,11 @@
     <Version>0.0.1</Version>
     <Authors>Patrick Kranz</Authors>
     <Description>A Wyam module that takes xml documents as input and generate playing cards in pdf format.</Description>
+    <PackageProjectUrl>https://github.com/LokiMidgard/PdfCardGenerator.Wyam</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/LokiMidgard/PdfCardGenerator.Wyam/blob/master/LICENSE.md</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/LokiMidgard/PdfCardGenerator.Wyam.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>wyam, pdf, playing cards</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
