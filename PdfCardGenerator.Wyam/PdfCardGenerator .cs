@@ -35,7 +35,10 @@ namespace PdfCardGenerator.Wyam
             {
                 using (var templateStream = template.GetStream())
                 {
-                    var project = Project.Load(templateStream, new DirectoryInfo(this.workingDirectory ?? Environment.CurrentDirectory));
+                    var workingDirectory = new DirectoryInfo(this.workingDirectory ?? Environment.CurrentDirectory);
+                    Console.WriteLine(workingDirectory);
+                    Console.WriteLine(this.workingDirectory);
+                    var project = Project.Load(templateStream, workingDirectory);
 
                     foreach (var input in inputs)
                     {
