@@ -1,7 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Authors>Patrick Kranz</Authors>
+    <Description>A Wyam module that takes xml documents as input and generate playing cards in pdf format.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PdfCardGenerator" Version="0.0.2" />
+    <PackageReference Include="Wyam.Common" Version="1.5.0">
+    </PackageReference>
+
+  </ItemGroup>
 
 </Project>
