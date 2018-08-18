@@ -15,9 +15,10 @@ namespace PdfCardGenerator.Wyam
 
         public PdfCardGenerator(IModule firstModule, params IModule[] modules)
         {
-            this.modules = new IModule[modules.Length + 1];
-            Array.Copy(modules, 0, this.modules, 1, modules.Length);
-            modules[0] = firstModule;
+            this.modules = new IModule[modules?.Length ?? 0 + 1];
+            if ((modules?.Length ?? 0) > 0)
+                Array.Copy(modules, 0, this.modules, 1, modules.Length);
+            this.modules[0] = firstModule;
         }
 
         public PdfCardGenerator WithWorkingDirectory(string path)
