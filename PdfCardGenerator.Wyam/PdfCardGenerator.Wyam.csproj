@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.10</Version>
+    <Version>0.0.11</Version>
     <Authors>Patrick Kranz</Authors>
     <Description>A Wyam module that takes xml documents as input and generate playing cards in pdf format.</Description>
     <PackageProjectUrl>https://github.com/LokiMidgard/PdfCardGenerator.Wyam</PackageProjectUrl>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Wyam.Common.Documents;
@@ -28,6 +29,12 @@ namespace PdfCardGenerator.Wyam
             });
         }
 
-        public override Stream Open(string path) => this.documents[path].GetStream();
+        public override Stream Open(string path)
+        {
+            if (!this.documents.ContainsKey(path))
+                throw new ArgumentException($"The path {path} does not exists.", nameof(path));
+            var document = this.documents[path];
+            return document.GetStream();
+        }
     }
 }
