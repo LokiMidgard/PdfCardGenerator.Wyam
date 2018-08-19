@@ -12,19 +12,36 @@ namespace PdfCardGenerator.Wyam
     {
         private readonly IModule[] modules;
         private string workingDirectory;
+        private IModule[] workingModules;
 
         public PdfCardGenerator(IModule firstModule, params IModule[] modules)
         {
-            this.modules = new IModule[(modules?.Length ?? 0) + 1];
+            var m = Concat(firstModule, modules);
+            this.modules = m;
+        }
+
+        private static IModule[] Concat(IModule firstModule, IModule[] modules)
+        {
+            var m = new IModule[(modules?.Length ?? 0) + 1];
             if ((modules?.Length ?? 0) > 0)
-                Array.Copy(modules, 0, this.modules, 1, modules.Length);
-            this.modules[0] = firstModule;
+                Array.Copy(modules, 0, m, 1, modules.Length);
+            m[0] = firstModule;
+            return m;
         }
 
         public PdfCardGenerator WithWorkingDirectory(string path)
         {
+            if (this.workingDirectory != null)
+                throw new InvalidOperationException($"You can't use {nameof(WithDocumentsAsWorkingDirectory)} and {nameof(WithWorkingDirectory)} together");
             this.workingDirectory = path;
+            return this;
+        }
 
+        public PdfCardGenerator WithDocumentsAsWorkingDirectory(IModule firstModule, params IModule[] modules)
+        {
+            if (this.workingDirectory != null)
+                throw new InvalidOperationException($"You can't use {nameof(WithDocumentsAsWorkingDirectory)} and {nameof(WithWorkingDirectory)} together");
+            this.workingModules = Concat(firstModule, modules);
             return this;
         }
 
@@ -35,8 +52,16 @@ namespace PdfCardGenerator.Wyam
             {
                 using (var templateStream = template.GetStream())
                 {
-                    var workingDirectory = new DirectoryInfo(this.workingDirectory ?? Environment.CurrentDirectory);
-                    var project = Project.Load(templateStream, workingDirectory);
+
+                    AbstractFileProvider fileProvider;
+                    if (this.workingDirectory != null)
+                        fileProvider = new WorkingDirectoryFileProvider(new DirectoryInfo(this.workingDirectory));
+                    else if (this.workingModules != null)
+                        fileProvider = new DocumentFileProvider(context.Execute(this.workingModules));
+                    else
+                        fileProvider = new WorkingDirectoryFileProvider(new DirectoryInfo(Environment.CurrentDirectory));
+
+                    var project = Project.Load(templateStream, fileProvider);
 
                     foreach (var input in inputs)
                     {
